@@ -5,11 +5,19 @@
   "name": "node",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ceperiv/node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ceperiv/node/issues"
+  },
+  "homepage": "https://github.com/Ceperiv/node#readme",
   "description": ""
 }
