@@ -1,65 +1,48 @@
-const fileService = require("../services/file.service");
+const {userService} = require("../services");
+const {statusCode} = require("../constants");
+
 module.exports = {
-    getAllUsers: async (req, res) => {
-        const usersFromService = await fileService.getUsers();
-        res.json(usersFromService)
+    getAllUsers: async (req, res, next) => {
+        try {
+            const users = await userService.getAllUsers();
+
+            res.json(users);
+        } catch (e) {
+            next(e);
+        }
     },
-    getUserById: async (req, res) => {
-        const {userId} = req.params
-        if (Number.isNaN(+userId) || +userId < 0) {
-            res.status(400).json('wrong user id!!!')
-            console.log('wrong user id!!!')
-            console.log('---------------')
+    getUserById: async (req, res, next) => {
+        try {
+           const {user} = req
+            res.json(user)
+        } catch (e) {
+            next(e)
         }
-        const user = await fileService.getUser(+userId)
-        if (!user) {
-            res.status(404).json('user not found!!!')
-            console.log('user not found')
-            console.log('---------------')
-
-        }
-
-        res.json(user)
     },
-    createUser: async (req, res) => {
-        const user = await fileService.insertUser(req.body);
-        res.status(201).json(user)
+    createUser: async (req, res, next) => {
+        try {
+            const user = await userService.createUser(req.body);
+            res.status(statusCode.CREATE).json(user)
+        } catch (e) {
+            next(e)
+        }
     },
-    editUser: async (req, res) => {
-        const {userId} = req.params
-        const {age, name} = req.body
-        if (Number.isNaN(+userId) || +userId < 0) {
-            res.status(400).json('wrong user id!!!')
-            console.log('wrong user id!!!')
-            console.log('---------------')
+    updateUser: async (req, res, next) => {
+        try {
+            const {userId} = req.params
+            const user = await userService.updateUser(userId, req.body)
+            res.status(statusCode.CREATE).json(user)
+        } catch (e) {
+            next(e)
         }
-        const userObject = {}
-        if (name) userObject.name = name
-        if (age) userObject.age = age
-
-        const user = await fileService.updateUser(+userId, userObject)
-        if (!user) {
-            res.status(404).json('user not found!!!')
-            console.log('user not found')
-            console.log('---------------')
-
-        }
-        res.status(201).json(user)
     },
-    removeUser: async (req, res) => {
-        const {userId} = req.params
-        if (Number.isNaN(+userId) || +userId < 0) {
-            res.status(400).json('wrong user id!!!')
-            console.log('wrong user id!!!')
-            console.log('---------------')
+    deleteUser: async (req, res, next) => {
+        try {
+            const {userId} = req.params
+            await userService.deleteUser(userId)
+            res.status(statusCode.NO_CONTENT).json('done')
+        } catch (e) {
+            next(e)
         }
-        const user = await fileService.deleteUser(+userId)
-        if (!user) {
-            res.status(404).json('user not found!!!')
-            console.log('user not found')
-            console.log('---------------')
-        }
-        res.status(204)
-
     }
 }
