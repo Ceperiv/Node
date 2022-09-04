@@ -18,7 +18,7 @@ module.exports = {
         try {
             const {_id, my_cars} = req.user;
             const car = await carService.createCar({...req.body, my_user: _id});
-            await userService.getUserById(_id, {my_cars: [...my_cars, car._id]})
+            await userService.updateUser(_id, {my_cars: [...my_cars, car._id]})
                 res.status(statusCode.CREATE).json(car)
         } catch (e) {
             next(e)

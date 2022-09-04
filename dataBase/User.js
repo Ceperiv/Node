@@ -8,7 +8,7 @@ const userSchema = new Schema({
     my_cars: {
         type: [Schema.Types.ObjectId],
         ref: 'Cars',
-        select: false
+
     },
 }, {
     timestamps: true,

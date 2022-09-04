@@ -17,6 +17,7 @@ module.exports = {
         return User.findById(id).select(['+my_cars']).populate('my_cars');
     },
 
+
     updateUser(userId, newUserObject) {
         return User.findOneAndUpdate({_id: userId}, newUserObject, {new: true});
     },
