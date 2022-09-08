@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const {PORT, MONGO_URL} = require('./config/config')
 const {mainErrorHandler} = require("./Errors");
-const {userRouter, carRouter} = require('./routes')
+const {userRouter, carRouter, authRouter} = require('./routes')
 
 app.use(express.json())
 
@@ -15,9 +15,10 @@ app.get('/', (req, res) => {
     res.json('hello:)')
 })
 
-app.use('/users', userRouter)
 
+app.use('/auth', authRouter)
 app.use('/cars', carRouter)
+app.use('/users', userRouter)
 
 app.use('*', (req, res, next) => {
     next(new Error('Route not found'))

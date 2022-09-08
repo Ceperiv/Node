@@ -1,5 +1,5 @@
 module.exports = {
-    // Auth: require('./Auth'),
+    Auth: require('./Auth'),
     Car: require('./Car'),
     User: require('./User'),
 };

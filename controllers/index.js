@@ -1,5 +1,5 @@
 module.exports = {
+    authController: require('./auth.controller'),
     carController: require('./car.controller'),
-    // uthController: require('./auth.controller'),
     userController: require('./user.controller'),
 }

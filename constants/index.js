@@ -1,5 +1,5 @@
 module.exports = {
-    // constant: require('./constant'),
-    // tokenTypeEnum: require('./tokenType.enum'),
+    constant: require('./constants'),
+    tokenTypeEnum: require('./tokenTypes.enum'),
     statusCode: require('./statusCode.enum'),
 };
