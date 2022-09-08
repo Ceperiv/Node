@@ -1,4 +1,5 @@
 const {tokenService, authService,} = require("../services");
+const {Auth} = require("../dataBase");
 
 module.exports = {
     login: async (req, res, next) => {
@@ -34,7 +35,7 @@ module.exports = {
     logout: async (req, res, next) => {
         try {
             const {_id, access_token} = req.tokenInfo;
-            // Auth.deleteMany({user:user._id, access_token})
+            // await Auth.deleteMany({_id, access_token})
             await authService.deleteOneByParams({_id, access_token})
 
             res.json('logout ok)')
