@@ -2,6 +2,7 @@ const {Router} = require('express');
 
 const {carController} = require("../controllers");
 const {commonMdlwr, userMdlw, carMdlwr, authMdlwr} = require("../middlewares");
+const {newCarValidator, updateCarValidator} = require("../validators/car.validators");
 
 const carRouter = Router()
 
@@ -11,19 +12,15 @@ carRouter.get(
     carMdlwr.checkIsCarIdPresent,
     carController.getCarById
 );
-
 carRouter.post(
     '/',
-    commonMdlwr.checkIsIdValid('userId', 'query'),
+    commonMdlwr.checkIsBodyValid(newCarValidator),
     authMdlwr.checkIsAccessToken,
-    carMdlwr.checkIsCarBodyValid,
-    userMdlw.checkIsUserIdPresent('query'),
     carController.createCar);
 carRouter.put(
     '/:carId',
-    commonMdlwr.checkIsIdValid('carId'),
     authMdlwr.checkIsAccessToken,
-    carMdlwr.checkIsCarBodyValid,
+    commonMdlwr.checkIsBodyValid(updateCarValidator),
     carMdlwr.checkIsCarIdValid,
     carMdlwr.checkIsCarIdPresent,
     carController.updateCar)

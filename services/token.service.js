@@ -22,6 +22,7 @@ module.exports = {
     createAuthTokens: (payload = {}) => {
         const access_token = jwt.sign(payload, ACCESS_SECRET_WORD, {expiresIn: ACCESS_TOKEN_LIFETIME});
         const refresh_token = jwt.sign(payload, REFRESH_SECRET_WORD, {expiresIn: REFRESH_TOKEN_LIFETIME});
+        //todo check expiresIn access tokens (live time wrong)
         return {
             access_token,
             refresh_token

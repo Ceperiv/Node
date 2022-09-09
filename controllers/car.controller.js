@@ -13,9 +13,14 @@ module.exports = {
     },
     createCar: async (req, res, next) => {
         try {
-            const {_id, my_cars} = req.user;
+            const {_id} = req.tokenInfo;
+            console.log(_id)
+
             const car = await carService.createCar({...req.body, my_user: _id});
-            await userService.updateUser(_id, {my_cars: [...my_cars, car._id]})
+
+            const userCars = await carService.getCarsByParams({user:_id});
+
+            await userService.updateUser(_id, {my_cars: [...userCars, car._id]})
             res.status(statusCode.CREATE).json(car)
         } catch (e) {
             next(e)

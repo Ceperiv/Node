@@ -1,12 +1,14 @@
 const {Router} = require('express');
 
 const {authController} = require("../controllers");
-const {userMdlw, authMdlwr} = require("../middlewares");
+const {userMdlw, authMdlwr, commonMdlwr} = require("../middlewares");
+const {loginUserValidator} = require("../validators/user.validators");
 
 const authRouter = Router()
 
 authRouter.post(
     '/login',
+    commonMdlwr.checkIsBodyValid(loginUserValidator),
     userMdlw.getUserDynamically('body', 'email'),
     authController.login
 );

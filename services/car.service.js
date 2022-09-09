@@ -7,6 +7,9 @@ module.exports = {
     getOneByParams(filter) {
         return Car.findOne(filter);
     },
+    getCarsByParams(filter) {
+        return Car.find(filter);
+    },
     getCarById(id) {
         return Car.findById(id).populate('my_user');
     },
