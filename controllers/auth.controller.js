@@ -1,15 +1,16 @@
 const {tokenService, authService,} = require("../services");
-const {Auth} = require("../dataBase");
+const {sentEmail} = require("../services/email.service");
+const {emailActionEnum} = require("../constants");
 
 module.exports = {
     login: async (req, res, next) => {
         try {
-            const {password} = req.body;
-            const {password: hashPassword, _id} = req.user
-
+            const {password, email} = req.body;
+            const {password: hashPassword, _id, name} = req.user
             await tokenService.comparePassword(password, hashPassword);
             const authTokens = tokenService.createAuthTokens({_id})
-            await authService.saveTokens({...authTokens, user: _id})
+            await authService.saveTokens({...authTokens, my_user: _id});
+            // await sentEmail(email, emailActionEnum.WELCOME, {userName: name})
 
             res.json({
                 ...authTokens,
@@ -22,8 +23,8 @@ module.exports = {
     refresh: async (req, res, next) => {
         try {
             const {user, refresh_token} = req.body;
-            await authService.saveTokens.deleteOneByParams({refresh_token})
-
+            console.log(req.body)
+            await authService.deleteOneByParams({refresh_token})
             const authTokens = tokenService.createAuthTokens({_id: user})
             const newTokens = await authService.saveTokens({...authTokens, user})
 

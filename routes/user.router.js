@@ -22,7 +22,6 @@ userRouter.post(
 userRouter.put(
     '/:userId',
     commonMdlwr.checkIsIdValid('userId'),
-
     authMdlwr.checkIsAccessToken,
     commonMdlwr.checkIsBodyValid(updateUserValidator),
     userMdlw.checkIsUserEmailUniq,

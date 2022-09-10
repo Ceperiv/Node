@@ -1,0 +1,20 @@
+doctype html
+html
+    head
+        style
+            include style.css
+    body
+        div
+            | HELLO, #{userName}!
+            br
+            | test nodemailer
+            h4 h4 #{userName}
+            h3 h3 #{userName}
+            h2 h2 #{userName}
+            h1 h1 #{userName}
+        div
+            block content
+div.footer
+    | Best regards
+    br
+    a(href=frontendURL) google

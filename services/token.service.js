@@ -22,7 +22,6 @@ module.exports = {
     createAuthTokens: (payload = {}) => {
         const access_token = jwt.sign(payload, ACCESS_SECRET_WORD, {expiresIn: ACCESS_TOKEN_LIFETIME});
         const refresh_token = jwt.sign(payload, REFRESH_SECRET_WORD, {expiresIn: REFRESH_TOKEN_LIFETIME});
-        //todo check expiresIn access tokens (live time wrong)
         return {
             access_token,
             refresh_token
@@ -33,6 +32,8 @@ module.exports = {
             let secretWord;
             if (tokenType === tokenTypeEnum.ACCESS) secretWord = ACCESS_SECRET_WORD
             if (tokenType === tokenTypeEnum.REFRESH) secretWord = REFRESH_SECRET_WORD
+
+            return jwt.verify(token, secretWord)
         } catch (e) {
             throw new ApiError('Token is not valid', statusCode.UNAUTHORIZED)
         }
