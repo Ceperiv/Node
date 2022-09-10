@@ -11,7 +11,7 @@ module.exports = {
                 if (!access_token) {
                     throw new ApiError('No token', statusCode.BAD_REQUEST)
                 }
-                tokenService.checkToken(access_token, tokenTypeEnum.REFRESH)
+                tokenService.checkToken(access_token)
                 const tokenInfo = await authService.getOneWithUser({access_token})
 
                 if (!tokenInfo) {
@@ -26,12 +26,12 @@ module.exports = {
     checkIsRefreshToken:
         async (req, res, next) => {
             try {
-                const refresh_token = req.get(statusCode.UNAUTHORIZED);
+                const refresh_token = req.get(constant.AUTHORIZATION);
 
                 if (!refresh_token) {
                     throw new ApiError('No token', statusCode.BAD_REQUEST)
                 }
-                tokenService.checkToken(refresh_token)
+                tokenService.checkToken(refresh_token, tokenTypeEnum.REFRESH)
                 const tokenInfo = await authService.getOneByParams({refresh_token})
 
                 if (!tokenInfo) {
