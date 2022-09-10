@@ -34,6 +34,7 @@ module.exports = {
         try {
             const {userId} = req.params
             const user = await userService.updateUser(userId, req.body)
+
             res.status(statusCode.CREATE).json(user)
         } catch (e) {
             next(e)
@@ -43,6 +44,7 @@ module.exports = {
         try {
             const {userId} = req.params
             await userService.deleteUser(userId)
+
             res.status(statusCode.NO_CONTENT).json('done')
         } catch (e) {
             next(e)

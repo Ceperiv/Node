@@ -17,7 +17,6 @@ authRouter.post(
 );
 authRouter.post(
     '/logout',
-    // userMdlw.getUserDynamically('body', 'email'),
     authMdlwr.checkIsAccessToken,
     authController.logout
 );

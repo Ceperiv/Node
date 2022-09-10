@@ -1,5 +1,4 @@
 const {tokenService, authService,} = require("../services");
-const {Auth} = require("../dataBase");
 
 module.exports = {
     login: async (req, res, next) => {
@@ -8,8 +7,9 @@ module.exports = {
             const {password: hashPassword, _id} = req.user
 
             await tokenService.comparePassword(password, hashPassword);
+
             const authTokens = tokenService.createAuthTokens({_id})
-            await authService.saveTokens({...authTokens, user: _id})
+            await authService.saveTokens({...authTokens, my_user: _id})
 
             res.json({
                 ...authTokens,
@@ -21,11 +21,11 @@ module.exports = {
     },
     refresh: async (req, res, next) => {
         try {
-            const {user, refresh_token} = req.body;
-            await authService.saveTokens.deleteOneByParams({refresh_token})
+            const {my_user, refresh_token} = req.tokenInfo;
+            await authService.deleteOneByParams({refresh_token})
 
-            const authTokens = tokenService.createAuthTokens({_id: user})
-            const newTokens = await authService.saveTokens({...authTokens, user})
+            const authTokens = tokenService.createAuthTokens({_id: my_user})
+            const newTokens = await authService.saveTokens({...authTokens, my_user})
 
             res.json({newTokens})
         } catch (e) {
@@ -43,5 +43,4 @@ module.exports = {
             next(e)
         }
     },
-
 }

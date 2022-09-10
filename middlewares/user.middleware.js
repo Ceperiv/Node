@@ -7,12 +7,17 @@ module.exports = {
     checkIsUserBodyValid:
         async (req, res, next) => {
             try {
-                const {age, name, id} = req.body;
-                if (Number.isNaN(+age) || age <= 0) {
-                    throw new ApiError('Wrong user age', statusCode.BAD_REQUEST)
+                const {age, name} = req.body;
+
+                if (age) {
+                    if (Number.isNaN(+age) || age <= 0) {
+                        throw new ApiError('Wrong user age', statusCode.BAD_REQUEST)
+                    }
                 }
-                if (name.length < 2) {
-                    throw new ApiError('wrong user name', statusCode.BAD_REQUEST)
+                if (name) {
+                    if (name.length < 2 || name.length > 35) {
+                        throw new ApiError('wrong user name', statusCode.BAD_REQUEST)
+                    }
                 }
                 next()
             } catch (e) {
@@ -26,6 +31,7 @@ module.exports = {
             if (!user) {
                 throw new ApiError('Wrong user id', statusCode.BAD_REQUEST)
             }
+
             req.user = user
             next()
         } catch (e) {

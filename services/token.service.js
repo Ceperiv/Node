@@ -32,6 +32,8 @@ module.exports = {
             let secretWord;
             if (tokenType === tokenTypeEnum.ACCESS) secretWord = ACCESS_SECRET_WORD
             if (tokenType === tokenTypeEnum.REFRESH) secretWord = REFRESH_SECRET_WORD
+
+            return jwt.verify(token, secretWord);
         } catch (e) {
             throw new ApiError('Token is not valid', statusCode.UNAUTHORIZED)
         }
