@@ -14,19 +14,15 @@ const sentEmail = async (userMail, emailAction, locals = {}) => {
             pass: NO_REPLY_PASSWORD,
         }
     });
-
     const templateParser = new EmailTemplates({
         views: {root: path.join(process.cwd(), 'email-templates')}
     })
 
     const emailInfo = emailTemplatesObj[emailAction]
-
     if (!emailInfo) {
         throw new ApiError('wrong template name', 500)
     }
-
-    const html = await templateParser.render(emailInfo.templateName, {...locals, frontendURL:FRONTEND_URL})
-
+    const html = await templateParser.render(emailInfo.templateName, {...locals, frontendURL: FRONTEND_URL})
 
     return transporter.sendMail({
         from: 'UK of Ceperiv',

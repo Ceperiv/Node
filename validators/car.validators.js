@@ -1,8 +1,5 @@
 const Joi = require('joi')
 
-
-const IDValidator = require("./common.validators");
-
 const nameValidator = Joi.string().alphanum().min(2).max(35).trim();
 const yearValidator = Joi.number().integer().min(1950).max( new Date().getFullYear());
 const modelValidator = Joi.string().alphanum().min(2).max(35).trim();

@@ -2,10 +2,9 @@ const {userService} = require("../services");
 const {ApiError} = require("../Errors/index");
 const {statusCode} = require("../constants");
 const {User} = require("../dataBase");
-const {userValidators} = require("../validators");
 
 module.exports = {
-       checkIsUserIdPresent: (from = 'params') => async (req, res, next) => {
+    checkIsUserIdPresent: (from = 'params') => async (req, res, next) => {
         try {
             const {userId} = req[from];
             const user = await userService.getUserById(userId)

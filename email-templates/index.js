@@ -7,5 +7,9 @@ module.exports = {
     [emailActionEnum.TEST]: {
         subject: 'test:)',
         templateName: 'test'
+    },
+    [emailActionEnum.FORGOT_PASSWORD]: {
+        subject: 'forgot pass',
+        templateName: 'forgot_pass'
     }
 };

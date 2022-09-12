@@ -1,7 +1,6 @@
 const Joi = require('joi')
 
 const {EMAIL, PASSWORD} = require("../constants/regex.enum");
-const IDValidator = require("./common.validators");
 const {ApiError} = require("../Errors");
 const {statusCode} = require("../constants");
 
@@ -20,15 +19,22 @@ const loginUserValidator = Joi.object({
     email: emailValidator.required().error(new ApiError('wrong email', statusCode.BAD_REQUEST)),
     password: passwordValidator.required().error(new ApiError('wrong password', statusCode.BAD_REQUEST)),
 });
+const userEmailValidator = Joi.object({
+    email: emailValidator.required().error(new ApiError('wrong email...', statusCode.BAD_REQUEST)),
+});
+const userPasswordValidator = Joi.object({
+    password: passwordValidator.required().error(new ApiError('wrong password...', statusCode.BAD_REQUEST)),
+});
 const updateUserValidator = Joi.object({
     name: nameValidator,
     age: ageValidator,
     email: emailValidator,
 });
 
-
 module.exports = {
     newUserValidator,
     loginUserValidator,
     updateUserValidator,
+    userEmailValidator,
+    userPasswordValidator
 }
