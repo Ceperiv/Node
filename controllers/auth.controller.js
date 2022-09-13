@@ -8,16 +8,19 @@ const {
 } = require("../services");
 const {emailActionEnum, tokenTypeEnum, constant, statusCode} = require("../constants");
 const {FRONTEND_URL} = require("../config/config");
+const {User} = require("../dataBase");
 
 module.exports = {
     login: async (req, res, next) => {
         try {
             const {password, email} = req.body;
-            const {password: hashPassword, _id, name} = req.user
-            await tokenService.comparePassword(password, hashPassword);
+            const { _id} = req.user
+
             const authTokens = tokenService.createAuthTokens({_id})
             await authService.saveTokens({...authTokens, my_user: _id});
-            await emailService.sentEmail(email, emailActionEnum.WELCOME, {userName: name})
+            // await emailService.sentEmail(email, emailActionEnum.WELCOME, {userName: name})
+
+           await req.user.checkIsPasswordSame(password)
 
             res.json({
                 ...authTokens,

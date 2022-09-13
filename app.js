@@ -1,11 +1,17 @@
 const express = require('express');
 const {mongoose} = require('mongoose');
 const app = express();
-require('dotenv').config();
+require('dotenv').config({path:'./.env'});
 
-const {PORT, MONGO_URL} = require('./config/config')
+const {PORT, MONGO_URL, NODE_ENV} = require('./config/config')
+const runCronJobs = require('./cron')
 const {mainErrorHandler} = require("./Errors");
 const {userRouter, carRouter, authRouter} = require('./routes')
+
+if (NODE_ENV !== 'production') {
+    const morgan = require('morgan')
+    app.use(morgan('dev'))
+}
 
 app.use(express.json())
 
@@ -29,6 +35,8 @@ app.use(mainErrorHandler)
 app.listen(PORT, () => {
     console.log('DONE... port', PORT);
     mongoose.connect(MONGO_URL);
+
+    runCronJobs()
 });
 
 
