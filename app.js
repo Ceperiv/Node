@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const {mongoose} = require('mongoose');
 const app = express();
 require('dotenv').config({path:'./.env'});
@@ -17,10 +18,11 @@ app.use(express.json())
 
 app.use(express.urlencoded({extended: true}))
 
+app.use(fileUpload({}))
+
 app.get('/', (req, res) => {
     res.json('hello:)')
 })
-
 
 app.use('/auth', authRouter)
 app.use('/cars', carRouter)
@@ -38,5 +40,3 @@ app.listen(PORT, () => {
 
     runCronJobs()
 });
-
-
