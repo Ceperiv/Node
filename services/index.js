@@ -6,6 +6,7 @@ module.exports = {
     imageService: require('./image.service'),
     previousPasswordService: require('./previousPassword.service'),
     s3Service: require('./S3.service'),
+    smsService: require('./sms.service'),
     tokenService: require('./token.service'),
     userService: require('./user.service'),
     }
