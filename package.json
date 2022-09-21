@@ -27,7 +27,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build",
     "start": "node app.js",
     "start:prod": "set NODE_ENV=production&& nodemon app.js",
     "start:dev": "set NODE_ENV=development&& nodemon app.js",
