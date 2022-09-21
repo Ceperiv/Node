@@ -28,7 +28,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run build",
-    "start": "node server.js",
+    "start": "node app.js",
     "start:prod": "set NODE_ENV=production&& nodemon app.js",
     "start:dev": "set NODE_ENV=development&& nodemon app.js",
     "start:local": "set NODE_ENV=local nodemon app.js",
